@@ -16,6 +16,6 @@
     "dev": "nodemon src/index.js",
     "start": "node src/index.js"
   },
-  "author": "BarnoStudios < contact@barnostudios.com >",
+  "author": "Barno < contact@barnostudios.com >",
   "license": "MIT"
 }
