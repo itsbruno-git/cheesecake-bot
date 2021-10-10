@@ -1,4 +1,4 @@
-const {Client, Intents, Collection} = require('discord.js');
+/*const {Client, Intents, Collection} = require('discord.js');
 const client = new Client({intents: [Intents.FLAGS.GUILDS,Intents.FLAGS.GUILD_MESSAGES]});
 const fs = require('fs');
 const path = require('path');
@@ -58,4 +58,4 @@ let token_promise=client.login(BOT.token);
 token_promise.then(()=>{
 console.log("cheescakeON");
 },(error, response)=>{console.log(error);});
-
+*/
