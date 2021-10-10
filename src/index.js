@@ -12,8 +12,8 @@ const {BOT} = require('./config');
 //no me gustaaa :c
 const arrayOfStatus = [
     "Usa el prefijo '-' para llamarme",
-    "bot en desarrollo, estado ALPHA"
-]
+    "bot en desarrollo, estado BETA",
+    "Hoy, Gran lanzamiento"]
 
 client.command= new Collection();
 client.on("ready", () => {
