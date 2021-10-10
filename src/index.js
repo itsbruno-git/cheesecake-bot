@@ -1,6 +1,6 @@
 const {Client, Intents, Collection} = require('discord.js');
 const client = new Client({intents: [Intents.FLAGS.GUILDS,Intents.FLAGS.GUILD_MESSAGES]});
-const fs = require('fs');
+/*const fs = require('fs');
 const path = require('path');
 
 const {BOT} = require('./config');
@@ -55,7 +55,7 @@ const commands = fs.readdirSync(path.join(__dirname, 'commands/cmd'));
         client.command.set(cmd.name, cmd);
     }
 
-    
+    */
 let token_promise=client.login(BOT.token);
 token_promise.then(()=>{
 console.log("cheescakeON");
