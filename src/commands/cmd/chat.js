@@ -93,3 +93,4 @@ function chatgenerate(client, message, args) {
     );
   });
 }
+
