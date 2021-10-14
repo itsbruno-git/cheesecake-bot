@@ -3,8 +3,9 @@ const fs = require('fs');
 const path = require('path');
 const { BOT } = require('./config');
 const { Client } = require('pg')
-const {initialize} = require('./database/database')
+const { initialize } = require('./database/database')
 const queries = require('./database/queries')
+const { manageMemberAdd } = require('./manager')
 
 
 exports.initConfiguration = (client, database) => {
@@ -12,11 +13,11 @@ exports.initConfiguration = (client, database) => {
     return new Promise((resolve, reject) => {
         let configurationPromises = []
 
-   
+
 
         let databaseClient = initDatabaseAccess(database)
 
-        configurationPromises.push({ name: 'Database', promise: databaseClient.connect() , errorMsg: 'Database connection failed.' })
+        configurationPromises.push({ name: 'Database', promise: databaseClient.connect(), errorMsg: 'Database connection failed.' })
         configurationPromises.push({ name: 'Discord Login', promise: client.login(BOT.token), errorMsg: 'Login to Discord failed.' })
 
         let promises = configurationPromises.map(configProm => {
@@ -34,7 +35,7 @@ exports.initConfiguration = (client, database) => {
         Promise.all(promises.map(config => config.prom))
             .then((fulfilled) => {
                 console.log(`The configuration steps (${fulfilled.join(', ')}) concluded successfully.`)
-                initialize(databaseClient) 
+                initialize(databaseClient)
                 initBotConfiguration(client)
                 resolve()
             }).catch(error =>
@@ -55,11 +56,13 @@ function initBotConfiguration(client) {
         client.command.set(cmd.name, cmd);
     }
 
+    let statusMessages = queries.getStatusMessages()
+    statusMessages.then((messages) => triggerBannerMessageMotion(client.user, messages, 7000))
 
-         let statusMessages = queries.getStatusMessages()
-         statusMessages.then((messages) => triggerBannerMessageMotion(client.user, messages, 7000))
-        
-    
+
+    client.on("guildMemberAdd", (guildMember) => {
+        manageMemberAdd(client, guildMember)
+    })
 
 
     client.on("messageCreate", (message) => {
