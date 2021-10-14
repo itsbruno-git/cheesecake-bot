@@ -3,7 +3,8 @@ const client = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_
 const { BOT } = require('./config');
 const { initConfiguration } = require('./initialize')
 
-initConfiguration(client).then(() => {
-    let token_promise = client.login(BOT.token);
-    token_promise.then(() => { console.log("cheescakeON"); }, (error) => { console.log(error); });
-}, (error) => console.log(error))
+initConfiguration(client, BOT.database)
+    .catch((error) => {
+        console.error(error.reason)
+        console.error(error.trace)
+    })

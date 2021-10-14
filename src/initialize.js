@@ -1,17 +1,43 @@
 const { Collection } = require('discord.js');
 const fs = require('fs');
 const path = require('path');
+const { BOT } = require('./config');
+const { Client } = require('pg')
 
 const arrayOfStatus = [
     "Usa el prefijo '-' para llamarme",
     "bot en desarrollo, estado ALPHA"
 ]
 
-exports.initConfiguration = (client) => {
+exports.initConfiguration = (client, database) => {
 
     return new Promise((resolve, reject) => {
+        let configurationPromises = []
+
         initBotConfiguration(client)
-        resolve()
+
+        configurationPromises.push({ name: 'Database', promise: initDatabaseAccess(database), errorMsg: 'Database connection failed.' })
+        configurationPromises.push({ name: 'Discord Login', promise: client.login(BOT.token), errorMsg: 'Login to Discord failed.' })
+
+        let promises = configurationPromises.map(configProm => {
+            return {
+                prom: new Promise((resolve, reject) => {
+                    configProm.promise
+                        .then(() => {
+                            resolve(configProm.name)
+                        })
+                        .catch((configPromError) => reject({ reason: `Initialization error: ${configProm.errorMsg}`, trace: configPromError }))
+                })
+            }
+        })
+
+        Promise.all(promises.map(config => config.prom))
+            .then((fulfilled) => {
+                console.log(`The configuration steps (${fulfilled.join(', ')}) concluded successfully.`)
+                resolve()
+            }).catch(error =>
+                reject(error))
+
     })
 
 }
@@ -29,7 +55,7 @@ function initBotConfiguration(client) {
 
     client.on("ready", () => {
 
-        triggerBannerMessageMotion(arrayOfStatus, 7000)
+        triggerBannerMessageMotion(client.user, arrayOfStatus, 7000)
         console.log(`${client.user.username} se inició correctamente: CheesecakeON`);
     });
 
@@ -50,17 +76,30 @@ function initBotConfiguration(client) {
 
 }
 
+function initDatabaseAccess(databaseQueryString) {
+
+    const client = new Client({
+        connectionString: databaseQueryString,
+        ssl: {
+            rejectUnauthorized: false
+        }
+
+    })
+    return client.connect()
+}
+
+
 function setBannerMessage(user, status) {
     user.setActivity(status);
 }
 
-function triggerBannerMessageMotion(messages, timeframe) {
+function triggerBannerMessageMotion(user, messages, timeframe) {
     let index = 0;
 
     setInterval(() => {
         if (index === messages.length) index = 0;
         const status = messages[index];
-        setBannerMessage(client.user, status)
+        setBannerMessage(user, status)
         index++;
     }, timeframe);
 }
