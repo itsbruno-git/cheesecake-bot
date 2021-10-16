@@ -35,6 +35,20 @@ exports.createChat = (chatMessages) => {
       let y = V_MARGIN;
 
       messages.forEach((msgBlock, index) => {
+
+      if (msgBlock.displayColor=="#000000") {
+        drawMessagesBlock({
+          canvasContext: ctx,
+          messageBlock: msgBlock.block.lines,
+          blockLinesCount: msgBlock.block.linesCount,
+          authorName: msgBlock.author,
+          authorAvatar: pictures[index],
+          authorColor: "#fff",
+          lineHeight: LINE_HEIGHT,
+          lineLengthMax: LINE_LENGTH_MAX * CHAR_LENGTH,
+          initPosition: { X: 0, Y: y },
+        });
+      }else{
         drawMessagesBlock({
           canvasContext: ctx,
           messageBlock: msgBlock.block.lines,
@@ -45,7 +59,7 @@ exports.createChat = (chatMessages) => {
           lineHeight: LINE_HEIGHT,
           lineLengthMax: LINE_LENGTH_MAX * CHAR_LENGTH,
           initPosition: { X: 0, Y: y },
-        });
+        });}
         y += (msgBlock.block.linesCount + 1) * LINE_HEIGHT + BLOCK_OFFSET;
       });
 
@@ -116,7 +130,8 @@ function drawMessagesBlock({
   canvasContext.fillText(authorName, 2 * lineHeight +2 * IMAGE_MARGIN, lineHeight + initY);
 
   //mensaje
-  canvasContext.fillStyle = "#e0e0e0";
+  canvasContext.font = "38px Sans-serif";
+  canvasContext.fillStyle = "#bfbfbf";
   messageBlock.forEach((message, index) => {
     canvasContext.fillText(
       message,

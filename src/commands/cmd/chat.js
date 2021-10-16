@@ -47,14 +47,127 @@ function chatgenerate(client, message, args) {
         content: "yo también",
       },
     ],
-    // ["1...Y por eso el color amarillo es el mas amarillo", "2perdona de que estabamamos hablando?"],
-    // ["1Estoy en clases", "2y que haces aquí capullo"],
-    // ["1Pan", "1leche", "1huevos", "1café", "2que haces?!", "1la lista de la compra duh", "2...", "1miel","2no te olvides de las galletas de dinosaurio"]
+    [
+      {
+        author: "me",
+        content: "...Y por eso el color amarillo es el mas amarillo"
+      },
+      {
+        author: "another",
+        content: "perdona de que estabamamos hablando?"
+      }
+    ],
+    [
+      {
+        author: "me",
+        content: "¿Cómo se queda un mago después de comer?"
+      },
+      {
+        author:"another",
+        content: "no porfavor, no otra vez..."
+      },
+      {
+        author:"me",
+        content:"MAGORDITO :D"
+      }      
+    ],
+    [
+      {
+        author: "me",
+        content: "Que"
+      },
+      {
+        author:"another",
+        content:"So"
+      },
+      {
+        author: "me",
+        content:"¿Por qué las rosas se llaman así si son rojas?"
+      },
+      {
+        author: "another",
+        content:"..."
+      },
+      {
+        author:"another",
+        content:"Por favor no empie-"
+      },
+      {
+        author:"me",
+        content:"¿Qué cuentan las ovejas para poder dormir?"
+      }
+    ],
+    [
+      {
+        author:"me",
+        content:"Como odio este juego..."
+      },
+      {
+        author:"another",
+        content:"Pero si tienes más de cie-"
+      },
+      {
+        author:"me",
+        content:"Es un buen juego, ese es su problema."
+      },
+    ],
+    [
+      {
+        author: "me",
+        content: "Nunca entendí como se hacía eso de los mensajes en blanco",
+      },
+      {
+        author: "another",
+        content: "",
+      },
+      {
+        author: "me",
+        content: "Capullo"
+      }
+    ],
+    [
+      {
+          author: "me",
+          content: "Pan",
+      },
+      {
+        author: "me",
+        content: "leche",
+      },
+      {
+        author:"me",
+        content: "huevos",
+      },
+      {
+        author:"me",
+        content: "café",
+      },
+      {
+        author:"another",
+        content: "que haces?!",
+      },
+      {
+        author:"me",
+        content:"la lista de la compra duh",
+      },
+      {
+        author:"another",
+        content:"...",
+      },
+      {
+        author:"me",
+        content:"miel",
+      },
+      {
+        author:"another",
+        content:"no te olvides de las galletas de dinosaurio",
+      },
+    ]
   ];
 
   let arrobado = message.mentions.users.first();
   let file;
-  random = Math.round(Math.random() * (chats.length - 1)); //random()*(max-min)+min
+  random = Math.round(Math.random() * (chats.length - 1) + 1); //random()*(max-min)+min
 
   if (!arrobado || arrobado.bot)
     return message.channel.send("mencione a un usuario para generar el chat");
