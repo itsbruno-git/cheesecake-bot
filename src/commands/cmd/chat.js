@@ -80,6 +80,8 @@ function chatgenerate(client, message, args) {
         author:"another",
         content:"So"
       },
+    ],
+    [
       {
         author: "me",
         content:"¿Por qué las rosas se llaman así si son rojas?"
@@ -167,7 +169,7 @@ function chatgenerate(client, message, args) {
 
   let arrobado = message.mentions.users.first();
   let file;
-  random = Math.round(Math.random() * (chats.length - 1) + 1); //random()*(max-min)+min
+  random = Math.round(Math.random() * (chats.length-1)); //random()*(max-min)+min
 
   if (!arrobado || arrobado.bot)
     return message.channel.send("mencione a un usuario para generar el chat");
