@@ -36,30 +36,17 @@ exports.createChat = (chatMessages) => {
 
       messages.forEach((msgBlock, index) => {
 
-      if (msgBlock.displayColor=="#000000") {
         drawMessagesBlock({
           canvasContext: ctx,
           messageBlock: msgBlock.block.lines,
           blockLinesCount: msgBlock.block.linesCount,
           authorName: msgBlock.author,
           authorAvatar: pictures[index],
-          authorColor: "#fff",
+          authorColor: msgBlock.displayColor == "#000000" ? '#fff' : msgBlock.displayColor,
           lineHeight: LINE_HEIGHT,
           lineLengthMax: LINE_LENGTH_MAX * CHAR_LENGTH,
           initPosition: { X: 0, Y: y },
         });
-      }else{
-        drawMessagesBlock({
-          canvasContext: ctx,
-          messageBlock: msgBlock.block.lines,
-          blockLinesCount: msgBlock.block.linesCount,
-          authorName: msgBlock.author,
-          authorAvatar: pictures[index],
-          authorColor: msgBlock.displayColor,
-          lineHeight: LINE_HEIGHT,
-          lineLengthMax: LINE_LENGTH_MAX * CHAR_LENGTH,
-          initPosition: { X: 0, Y: y },
-        });}
         y += (msgBlock.block.linesCount + 1) * LINE_HEIGHT + BLOCK_OFFSET;
       });
 
