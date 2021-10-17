@@ -1,3 +1,4 @@
-![Icon Dorito](https://user-images.githubusercontent.com/24357383/137637082-5b0ea73b-69c1-465e-a224-221369168710.jpg)
+
+![banner](https://user-images.githubusercontent.com/24357383/137639289-29c925eb-5a45-4f8c-8348-9de103949b13.jpg)
 # cheesecake-bot
 Desarrollo un Bot para mi servidor de Discord (#ClubDorito)
