@@ -51,7 +51,7 @@ exports.createChat = (chatMessages) => {
 
       let img_stream = canvas.toBuffer("image/png");
       let filename = `chatmessage-${Date.now()}.png`;
-      let filepath = `${CHAT_IMAGES_PATH}/filename`;
+      let filepath = `${CHAT_IMAGES_PATH}/${filename}`;
       fs.writeFileSync(filepath, img_stream);
 
       resolve({ path: filepath, name: filename });
