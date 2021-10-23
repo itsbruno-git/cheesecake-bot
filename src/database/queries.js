@@ -25,16 +25,16 @@ exports.getexitServerID = (serverID) => {
 function getMessageChannelID(serverID, channelType){
 
   let channel = executeQuery(
-    `SELECT '${channelType}' FROM servers WHERE server_id = '${serverID}'`
+    `SELECT ${channelType} FROM servers WHERE server_id = '${serverID}'`
   );
   return new Promise((resolve, reject) => {
     channel.then((result) => {
       let response = null;
       if (result.rows.length > 0) {
-        response = result.rows[0].config_value;
+        response = result.rows[0].welcome_channel;
       }
       resolve(response);
-    });
+    }).catch((err) =>{reject(err);});
   });
 
 };

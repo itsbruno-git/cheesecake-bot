@@ -1,9 +1,12 @@
-var database
+var database;
 
-exports.initialize = databaseClient =>{
-    database = databaseClient;
-}
+exports.initialize = (databaseClient) => {
+  database = databaseClient;
+};
 
-exports.executeQuery = query =>{
-return database.query(query)
-}
+exports.executeQuery = (query) => {
+  return new Promise((resolve, reject) => {
+       let queryResult = database.query(query)
+       queryResult.then((result) => {resolve(result)}).catch((err) => {reject(err)})
+  });
+};

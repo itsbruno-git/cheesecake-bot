@@ -35,8 +35,12 @@ exports.initConfiguration = (client, database) => {
         Promise.all(promises.map(config => config.prom))
             .then((fulfilled) => {
                 console.log(`The configuration steps (${fulfilled.join(', ')}) concluded successfully.`)
+                try {
                 initialize(databaseClient)
                 initBotConfiguration(client)
+                }catch(err){
+                    throw {reason: 'Initialization failed after configuration steps.', trace: err}
+                }
                 resolve()
             }).catch(error =>
                 reject(error))
