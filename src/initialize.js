@@ -8,17 +8,17 @@ const queries = require('./database/queries')
 const { manageMemberAdd } = require('./manager')
 
 
-exports.initConfiguration = (client, database) => {
+exports.initConfiguration = (client, parameters) => {
 
     return new Promise((resolve, reject) => {
         let configurationPromises = []
 
 
 
-        let databaseClient = initDatabaseAccess(database)
+        let databaseClient = initDatabaseAccess(parameters.database)
 
         configurationPromises.push({ name: 'Database', promise: databaseClient.connect(), errorMsg: 'Database connection failed.' })
-        configurationPromises.push({ name: 'Discord Login', promise: client.login(BOT.token), errorMsg: 'Login to Discord failed.' })
+        configurationPromises.push({ name: 'Discord Login', promise: client.login(parameters.token), errorMsg: 'Login to Discord failed.' })
 
         let promises = configurationPromises.map(configProm => {
             return {
@@ -35,8 +35,12 @@ exports.initConfiguration = (client, database) => {
         Promise.all(promises.map(config => config.prom))
             .then((fulfilled) => {
                 console.log(`The configuration steps (${fulfilled.join(', ')}) concluded successfully.`)
+                try {
                 initialize(databaseClient)
-                initBotConfiguration(client)
+                initBotConfiguration(client, parameters)
+                }catch(err){
+                    throw {reason: 'Initialization failed after configuration steps.', trace: err}
+                }
                 resolve()
             }).catch(error =>
                 reject(error))
@@ -45,7 +49,7 @@ exports.initConfiguration = (client, database) => {
 
 }
 
-function initBotConfiguration(client) {
+function initBotConfiguration(client, parameters) {
 
     client.command = new Collection();
 
@@ -68,10 +72,10 @@ function initBotConfiguration(client) {
     client.on("messageCreate", (message) => {
 
         if (message.author.bot) return;
+        let prefix = parameters.prefix
+        if (!message.content.startsWith(prefix)) return;
 
-        if (!message.content.startsWith(BOT.prefix)) return;
-
-        let [cmdname, ...cmdargs] = message.content.slice(BOT.prefix.length).trim().split(/\s+/);
+        let [cmdname, ...cmdargs] = message.content.slice(prefix.length).trim().split(/\s+/);
         const cmd = client.command.get(cmdname);
 
         if (!cmd) return;

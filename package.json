@@ -17,7 +17,6 @@
     "nodemon": "^2.0.13"
   },
   "scripts": {
-    "dev": "nodemon src/index.js",
     "start": "node src/index.js"
   },
   "author": "Barno < contact@barnostudios.com >",

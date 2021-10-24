@@ -3,7 +3,7 @@ const client = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_
 const { BOT } = require('./config');
 const { initConfiguration } = require('./initialize')
 
-initConfiguration(client, BOT.database)
+initConfiguration(client, BOT)
     .catch((error) => {
         console.error(error.reason)
         console.error(error.trace)

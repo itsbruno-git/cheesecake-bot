@@ -1,3 +1,5 @@
+//cremos que no lo llama nada
+
 module.exports = (client) => {
     const channelId = "882354045292003339";
 
