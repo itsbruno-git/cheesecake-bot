@@ -20,5 +20,7 @@ function pumpkin(client, message, args) {
   ];
   random = Math.round(Math.random() * (calabazas.length - 1)); 
 
+  message.channel.send('Here ur calabaza... no la pierdas');  
   message.channel.send(calabazas[random]);
+
 }
